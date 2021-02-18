@@ -1,3 +1,7 @@
+/*
+    Autor: Brinzila Maria, grupa B5, anul 2
+*/
+
 public class Laboratorul1
 {
     public static void main(String[] args)
