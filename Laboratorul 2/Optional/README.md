@@ -19,3 +19,5 @@ de costuri (inainte sa modificam valorile cand calculam minimurile) si vom actua
 calculat. Pentru a calcula costul minim, tot ce trebuie sa facem este sa inmultim fiecare cost din matricea de coturi cu nr. de unitati corespunzatoare si facem suma valorilor 
 astfel rezultate. Acest algoritm satisface supply-ul si demand-ul deoarece nu ne oprim decat atunci cand pentru orice i, supply[i] = 0, iar pentru ca asta sa se intample,
 fiecare demand[i] va fi 0, oricare ar fi i.
+
+In Javadoc, am pus html-urile rezultate dupa ce am generat javadoc (overview-tree.html este pus si in folderul Javadoc si impreuna cu clasele).
