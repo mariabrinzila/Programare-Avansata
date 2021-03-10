@@ -3,7 +3,7 @@ import java.util.*;
 public class TravelPlan {
     /**
      * vom avea un oras si pentru locatiile din acel oras, preferintele turistului
-     * preferences.get(i) -> [1, c.size()] in functie de preferinta (1 -> cea mai preferata, 10 -> cea mai putin preferata)
+     * preferences.get(i) -> [1, c.size()] in functie de preferinta (reprezinta o ordine de vizitare a locatiilor din orasul c)
      */
     City c;
     List<Integer> preferences = new ArrayList<>();
