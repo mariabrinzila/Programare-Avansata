@@ -43,23 +43,21 @@ public class Algorithm {
 
         //initializari
         M[start] = true;
-        for (i = 1; i <= n; i++)
-        {
+        for (i = 1; i <= n; i++) {
             dmin[i] = INF;
             prec[i] = start;
         }
-        prec[start] = 0; dmin[start] = 0;
+        prec[start] = 0;
+        dmin[start] = 0;
         for (i = 1; i <= n; i++)
             if (G[start][i] > 0)
                 dmin[i] = G[start][i];
 
-        for (j = 1; j <= n; j++)
-        {
+        for (j = 1; j <= n; j++) {
             //aflu vfmin
             cmin = INF + 1;
             for (x = 1; x <= n; x++)
-                if (!M[x] && dmin[x] < cmin)
-                {
+                if (!M[x] && dmin[x] < cmin) {
                     cmin = dmin[x];
                     vfmin = x;
                 }
@@ -68,8 +66,7 @@ public class Algorithm {
             M[vfmin] = true;
             for (i = 1; i <= n; i++)
                 if (!M[i] && G[vfmin][i] > 0)
-                    if (dmin[i] > dmin[vfmin] + G[vfmin][i])
-                    {
+                    if (dmin[i] > dmin[vfmin] + G[vfmin][i]) {
                         dmin[i] = dmin[vfmin] + G[vfmin][i];
                         prec[i] = vfmin;
                     }
@@ -79,9 +76,9 @@ public class Algorithm {
          * construim drumul minim start - finish
          */
         int lg;
-        drum[0] = finish; lg = 1;
-        while (drum[lg - 1] != start)
-        {
+        drum[0] = finish;
+        lg = 1;
+        while (drum[lg - 1] != start) {
             drum[lg] = prec[drum[lg - 1]];
             lg++;
         }
