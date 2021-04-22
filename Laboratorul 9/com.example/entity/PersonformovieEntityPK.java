@@ -1,0 +1,44 @@
+package com.example.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Id;
+import java.io.Serializable;
+import java.util.Objects;
+
+public class PersonformovieEntityPK implements Serializable {
+    private long movieid;
+    private long personid;
+
+    @Column(name = "MOVIEID", nullable = false, precision = 0)
+    @Id
+    public long getMovieid() {
+        return movieid;
+    }
+
+    public void setMovieid(long movieid) {
+        this.movieid = movieid;
+    }
+
+    @Column(name = "PERSONID", nullable = false, precision = 0)
+    @Id
+    public long getPersonid() {
+        return personid;
+    }
+
+    public void setPersonid(long personid) {
+        this.personid = personid;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PersonformovieEntityPK that = (PersonformovieEntityPK) o;
+        return movieid == that.movieid && personid == that.personid;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(movieid, personid);
+    }
+}
