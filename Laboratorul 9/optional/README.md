@@ -12,6 +12,12 @@ findAll, findById etc.). Pe langa asta, am creat o clasa abstracta AbstractEntit
 si care ne ajuta la repository-ul abstract facut (acesta are un tip generic T care extinde entitatea abstracta => T sigur trebuie sa fie o entitate).
 
 Pentru al treilea punct, am facut un pachet nou, DAO, unde am abordarea prin JDBC. Acolo am facut o clasa abstracta AbstractFactory, in cadrul careia stabilesc conexiunea
-jdbc la baza de date oracle facuta 
+jdbc la baza de date oracle facuta si unde am cateva functii comune tuturor operatiilor DAO indiferent de entitate (delete, getByName, getById). Pe langa asta, am creat si
+clasele DAO corespunzatoare fiecarei entitati in cadrul carora am adaugat operatia de insert in baza de date (am pus-o aici si nu in clasa abstracta deoarece insertul este 
+particular fiecare entitati => fiecare dintre ele are parametrii proprii si nu putem generaliza).
+
+Pentru ultimul punct, in clasa abstracta AbstractEntity am adaugat un nou parametru, si anume jpa (este de tip boolean) => daca este true, inseamna ca vom face operatii pe 
+baza de date prin jpa si daca este fals, atunci ne vom folosi de jdbc. Pe langa asta, am adaugat functiile de set si get => la functia de get doar returnez aceasta variabila, iar in cadrul functiei set, citesc dintr-un fisier dat de utilizator un sir de caractere ("jpa" sau "jdbc") si setam variabila jpa in concordanta cu ce este in acest fisier.
+In Main, utilizatorul va crea un fisier si va scrie in el ce abordare doreste sa fie folosita si va da acel fisier ca parametru functiei setJpa.
 
 O seara frumoasa!
