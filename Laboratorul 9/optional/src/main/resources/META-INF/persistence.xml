@@ -10,6 +10,8 @@
         <class>com.example.entity.MovieEntity</class>
         <class>com.example.entity.PersonEntity</class>
         <class>com.example.entity.PersonformovieEntity</class>
+        <class>com.example.entity.ChartEntity</class>
+        <class>com.example.entity.MovieforchartEntity</class>
 
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
