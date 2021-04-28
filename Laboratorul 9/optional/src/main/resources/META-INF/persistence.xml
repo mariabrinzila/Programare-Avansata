@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+             version="2.2">
+    <persistence-unit name="default" transaction-type="RESOURCE_LOCAL">
+
+        <class>com.example.entity.GenreEntity</class>
+        <class>com.example.entity.GenreformovieEntity</class>
+        <class>com.example.entity.MovieEntity</class>
+        <class>com.example.entity.PersonEntity</class>
+        <class>com.example.entity.PersonformovieEntity</class>
+
+        <properties>
+            <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
+            <property name="javax.persistence.jdbc.user" value="STUDENT"/>
+            <property name="javax.persistence.jdbc.password" value="student"/>
+            <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver"/>
+
+            <property name="hibernate.connection.url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
+            <property name="hibernate.connection.driver_class" value="oracle.jdbc.driver.OracleDriver"/>
+        </properties>
+    </persistence-unit>
+</persistence>
