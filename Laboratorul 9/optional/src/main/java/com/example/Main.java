@@ -1,6 +1,8 @@
+import com.example.DAO.ChartDAO;
 import com.example.entity.ChartEntity;
 import com.example.entity.MovieEntity;
 import com.example.entity.PersonEntity;
+import com.example.repository.ChartRepository;
 import com.example.repository.MovieRepository;
 
 import javax.persistence.EntityManager;
@@ -9,11 +11,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException, SQLException {
         PersonEntity p = new PersonEntity();
         p.setId(10);
         p.setFullname("Angelina Jolie");
@@ -62,5 +65,21 @@ public class Main {
          */
         File in = new File(fileName);
         c.setJpa(in);
+
+        c.setId(3);
+        c.setName("Romantic comedies");
+        c.setCreation(Time.valueOf("28/04/2021"));
+
+        boolean val = c.getJpa();
+        if (val == true) {
+            ChartRepository repo = new ChartRepository(em, emf);
+            repo.BeforeAll();
+            repo.BeforeEach();
+            repo.findById(Long.valueOf(2));
+        }
+        else {
+            ChartDAO cd = new ChartDAO();
+            cd.getByName("Liked Movies");
+        }
     }
 }
