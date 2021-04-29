@@ -22,15 +22,16 @@ class ClientThread extends Thread {
                 request = in.readLine();
                 PrintWriter out = new PrintWriter(socket.getOutputStream());
 
-                if (request.equals("stop") || request.equals("exit")) {
-                    raspuns = "Server stopped.";
+                if (request.equals("stop")) {
+                    raspuns = "Server stopped";
                     out.println(raspuns);
                     out.flush();
                     over = true;
+                    socket.close();
                     System.exit(1);
                 }
                 else
-                    raspuns = "The request is: " + request;
+                    raspuns = "Server received the request: " + request;
 
                 out.println(raspuns);
                 out.flush();
