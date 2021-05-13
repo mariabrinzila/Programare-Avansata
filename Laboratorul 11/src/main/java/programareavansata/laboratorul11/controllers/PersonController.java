@@ -30,6 +30,7 @@ public class PersonController {
 
     @GetMapping("/all")
     public List<Person> getAllUsers() {
+        users = repo.findAll();
         return repo.findAll();
     }
 
