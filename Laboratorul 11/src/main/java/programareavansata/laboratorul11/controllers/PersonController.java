@@ -38,8 +38,8 @@ public class PersonController {
     public String addUser(@PathVariable String name) {
         Integer id = 1 + users.size();
         Person a = new Person(id, name);
-        users.add(a);
         repo.save(a);
+        users = repo.findAll();
         return "User has been successfully added";
     }
 
@@ -55,7 +55,7 @@ public class PersonController {
             found.setId(id);
             found.setName(name);
             repo.save(found);
-            users.add(found);
+            users = repo.findAll();
             return "User's name was changed successfully.";
         }
     }
