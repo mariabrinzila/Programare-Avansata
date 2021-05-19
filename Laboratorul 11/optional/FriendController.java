@@ -1,10 +1,13 @@
 package programareavansata.laboratorul11.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import programareavansata.laboratorul11.entities.Friend;
 import programareavansata.laboratorul11.entities.Person;
 import programareavansata.laboratorul11.services.FriendService;
+import programareavansata.laboratorul11.utils.ExceptionHandler;
 
 import java.util.*;
 
@@ -41,8 +44,13 @@ public class FriendController {
 
     @DeleteMapping("/delete")
     public String deleteFriend(@RequestParam int pk) {
-        friends = service.unfriend(pk);
-        return "Person unfriended successfully.";
+        try {
+            friends = service.unfriend(pk);
+            return "Person unfriended successfully.";
+        } catch (Exception e) {
+            new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ExceptionHandler.internalError(e, "http://localhost:8090/friends/delete");
+        }
     }
 
     @PutMapping("/popular")
