@@ -2,6 +2,8 @@ import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.web.client.RestTemplate;
 
 class ClientThread extends Thread {
@@ -9,7 +11,7 @@ class ClientThread extends Thread {
     private SocialNetwork current;
     private Person currentUser = new Person();
     private int nr = 1;
-    private RestTemplate res = new RestTemplate();
+    private RestTemplate rest = new RestTemplate();
     String personURL = "http://localhost:8090/users";
 
     public ClientThread(Socket socket, SocialNetwork current) {
@@ -53,7 +55,7 @@ class ClientThread extends Thread {
                     user.setName(name);
                     currentUser = user;
 
-                    raspuns = "User " + currentUser.getName() + " was added to social network and is now logged in.";
+                    raspuns = rest.getForObject("http://localhost:8090/users/{name}", String.class, name);
                     out.println(raspuns);
                     out.flush();
                 }
@@ -108,6 +110,7 @@ class ClientThread extends Thread {
                         //friend name1, name2, ..., namek
                         String[] split = friends.split(", ");
                         int L = split.length;
+                        int pId = currentUser.getId(), fId;
 
                         for (i = 1; i < L; i++) {
                             ArrayList<Person> allUsers = current.getUsers();
@@ -115,6 +118,8 @@ class ClientThread extends Thread {
                             for (i = 0; i < lg; i++) {
                                 if (allUsers.get(i).getName().equals(split[i])) {
                                     currentUser.addFriend(allUsers.get(i));
+                                    fId = allUsers.get(i).getId();
+                                    rest.getForObject("http://localhost:8090/friends/add", String.class, pId, fId);
                                     break;
                                 }
                             }
@@ -129,9 +134,13 @@ class ClientThread extends Thread {
 
                         ArrayList<Person> allUsers = current.getUsers();
                         int lg = allUsers.size();
+                        int pId = currentUser.getId(), fId;
+
                         for (i = 0; i < lg; i++) {
                             if (allUsers.get(i).getName().equals(friends)) {
                                 currentUser.addFriend(allUsers.get(i));
+                                fId = allUsers.get(i).getId();
+                                rest.getForObject("http://localhost:8090/friends/add", String.class, pId, fId);
                                 break;
                             }
                         }
@@ -140,6 +149,44 @@ class ClientThread extends Thread {
                         out.println(raspuns);
                         out.flush();
                     }
+                }
+                else
+                if (request.contains("top")) {
+                    String[] separated = request.split("top ");
+                    int k = Integer.parseInt(separated[1]);
+
+                    String response = rest.getForObject("http://localhost:8090/friends/popular", String.class, k);
+                    if (response.contains("too big")) {
+                        //k is too big
+                        raspuns = "The k parameter is too big. Please choose a smaller one.";
+                        out.println(raspuns);
+                        out.flush();
+                    }
+                    else {
+                        //k has been chosen appropriately
+                        //we need to check if the user is in the top k most popular users 
+                        List<Person> result = rest.getForObject("http://localhost:8090/friends/allPopular", List.class);
+                        int lg = result.size();
+                        boolean yes = false;
+
+                        for (i = 0; i < lg; i++) {
+                            if (result.get(i).equals(currentUser)) {
+                                //the current user is in the top k most popular users
+                                raspuns = "The user is in the top " + k + " most popular people";
+                                out.println(raspuns);
+                                out.flush();
+                                yes = true;
+                                break;
+                            }
+                        }
+
+                        if (!yes) {
+                            raspuns = "The user is not in the top " + k + " most popular people";
+                            out.println(raspuns);
+                            out.flush();
+                        }
+                    }
+
                 }
                 else {
                     //logout
