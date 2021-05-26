@@ -100,24 +100,40 @@ public class MyFramework {
 
                 if (trying.isDirectory()) {
                     classes = getClassesFromDir(trying, "");
+
+                    int L = classes.size();
+
+                    for (i = 0; i < L; i++) {
+                        arg = classes.get(i).getClass();
+
+                        //@Test static
+                        for (Method m : arg.getMethods()) {
+                            if (m.isAnnotationPresent(Test.class)) {
+                                try {
+                                    m.invoke(null);
+                                    passed++;
+                                } catch (Throwable ex) {
+                                    System.out.printf("Test %s failed: %s %n", m, ex.getCause());
+                                    failed++;
+                                }
+                            }
+                        }
+                    }
                 }
-            }
-        }
+                else {
+                    //avem o clasa
+                    arg = Class.forName(className);
 
-        int L = classes.size();
-
-        for (i = 0; i < L; i++) {
-            arg = classes.get(i).getClass();
-
-            //@Test static
-            for (Method m : arg.getMethods()) {
-                if (m.isAnnotationPresent(Test.class)) {
-                    try {
-                        m.invoke(null);
-                        passed++;
-                    } catch (Throwable ex) {
-                        System.out.printf("Test %s failed: %s %n", m, ex.getCause());
-                        failed++;
+                    for (Method m : arg.getMethods()) {
+                        if (m.isAnnotationPresent(Test.class)) {
+                            try {
+                                m.invoke(null);
+                                passed++;
+                            } catch (Throwable ex) {
+                                System.out.printf("Test %s failed: %s %n", m, ex.getCause());
+                                failed++;
+                            }
+                        }
                     }
                 }
             }
